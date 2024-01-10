@@ -1,0 +1,4 @@
+roles:
+  - name: owner
+    local:
+      users: ["ap-south-1a"]

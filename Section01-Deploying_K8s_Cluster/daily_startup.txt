@@ -1,0 +1,19 @@
+export AWS_PROFILE=kops
+export AWS_ACCESS_KEY_ID=$(aws configure get aws_access_key_id)
+export AWS_SECRET_ACCESS_KEY=$(aws configure get aws_secret_access_key)
+export NAME=k8s.cloudkareai.com
+export KOPS_STATE_STORE=s3://cloudkareai-kops-state
+kops export kubeconfig $NAME --admin
+kops get cluster
+
+export VAULT_ADDR=http://dev-vault.ciscolivedemo2022.com:8200
+export VAULT_TOKEN="xxxx"
+vault login $VAULT_TOKEN
+
+Login
+fly --target=target login --concourse-url=http://dev-ci.ciscolivedemo2022.com:8080 -n main --username=ci --password=cisco@2022
+fly -t target e -c te_agents_install.yml
+Pipeline
+fly -t target set-pipeline -p pipeline1 -c /Users/anmodi/dev/ciscolivedemo/Section05_Building_the_Pipeline/pipeline_v1.yml -l /Users/anmodi/dev/notes/params.yml -v aws.region=us-east-1 -v az.name=us-east-1a -v vault.addr=http://dev-vault.ciscolivedemo2022.com:8200
+
+

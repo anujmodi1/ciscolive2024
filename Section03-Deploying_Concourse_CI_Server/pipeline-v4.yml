@@ -1,0 +1,32 @@
+display:
+  background_image: https://tetacourse.com/uploads/posts/2020-07/1595211523_1.jpg
+jobs:
+  - name: lab-prep
+    plan:
+      - get: git-resource
+        trigger: true
+      - task: lab_prep
+        file: git-resource/tasks/aws_deploy/basic_workflow.yml
+
+  - name: ap-south-1-Mumbai
+    public: true
+    plan:
+      - get: git-resource
+        passed: [lab-prep]
+      - task: aws_deploy_key
+        file: git-resource/tasks/aws_deploy/mumbai/aws_key_deploy.yml
+      - task: aws_deploy_vpc
+        file: git-resource/tasks/aws_deploy/mumbai/aws_env_deploy.yml
+      - task: aws_deploy_ubuntu_mumbai
+        file: git-resource/tasks/aws_deploy/mumbai/aws_deploy_centos.yml
+
+resource_types:
+resources:
+  - name: git-resource
+    source:
+      Username: ((Username))
+      branch: main
+      email: ((email))
+      private_key: ((private_key))
+      uri: ((git-uri))
+    type: git
