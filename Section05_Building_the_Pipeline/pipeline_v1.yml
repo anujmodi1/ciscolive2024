@@ -1,0 +1,84 @@
+display:
+  background_image: https://tetacourse.com/uploads/posts/2020-07/1595211523_1.jpg
+jobs:
+  - name: lab-prep
+    plan:
+      - get: git-resource
+        trigger: true
+      - task: lab_prep
+        file: git-resource/Section05_Building_the_Pipeline/input/vault_prep.yml
+
+  - name: aws_ubuntu_vm_deploy
+    public: true
+    plan:
+      - get: git-resource
+      - task: aws_deploy_key
+        file: git-resource/Section05_Building_the_Pipeline/input/aws_vm_deploy/aws_key_deploy.yml
+      - task: aws_deploy_vpc
+        file: git-resource/Section05_Building_the_Pipeline/input/aws_vm_deploy/aws_env_deploy.yml
+      - task: aws_deploy_ubuntu_california
+        file: git-resource/Section05_Building_the_Pipeline/input/aws_vm_deploy/aws_deploy_ubuntu.yml
+
+  - name: aws_ubuntu_vm_delete
+    public: true
+    plan:
+      - get: git-resource
+      - task: delete-aws-ubuntu
+        file: git-resource/Section05_Building_the_Pipeline/input/aws_vm_delete/aws_vm_delete.yml
+      - task: delete-aws-vpc
+        file: git-resource/Section05_Building_the_Pipeline/input/aws_vm_delete/aws_vpc_delete.yml
+
+  - name: deploy-te-agent
+    public: true
+    plan:
+      - get: git-resource
+      - task: deploy-te-agent
+        file: git-resource/Section05_Building_the_Pipeline/input/te_install_vault/te_agents_install.yml
+
+  - name: delete-te-agent
+    public: true
+    plan:
+      - get: git-resource
+      - task: delete-te-agent
+        file: git-resource/Section05_Building_the_Pipeline/input/te_install_vault/delete_te_agents.yml
+
+  - name: super-car-trader
+    public: true
+    plan:
+      - get: git-resource
+        passed: [lab-prep]
+      - task: aws_super_car_trader
+        file: git-resource/Section06_AppD_deployment/input/setup_supercar_trader_app_v2/input/supercar_trader_task.yml
+
+  - name: aws_centos_supercar_trader_app
+    public: true
+    plan:
+      - get: git-resource
+        passed: [ lab-prep ]
+      - task: aws_deploy_key
+        file: git-resource/Section06_AppD_deployment/input/aws_centos_supercar_trader_app/aws_key_deploy.yml
+      - task: aws_deploy_vpc
+        file: git-resource/Section06_AppD_deployment/input/aws_centos_supercar_trader_app/aws_env_deploy.yml
+      - task: aws_deploy_centos
+        file: git-resource/Section06_AppD_deployment/input/aws_centos_supercar_trader_app/aws_deploy_centos.yml
+
+  - name: aws_centos_vm_delete
+    public: true
+    plan:
+      - get: git-resource
+        passed: [ lab-prep ]
+      - task: delete-aws-centos
+        file: git-resource/Section06_AppD_deployment/input/aws_vm_delete/aws_centos_delete.yml
+      - task: delete-aws-vpc
+        file: git-resource/Section06_AppD_deployment/input/aws_vm_delete/aws_vpc_delete.yml
+
+resource_types:
+resources:
+  - name: git-resource
+    source:
+      Username: ((Username))
+      branch: ((git-branch))
+      email: ((email))
+      private_key: ((private_key))
+      uri: ((git-uri))
+    type: git

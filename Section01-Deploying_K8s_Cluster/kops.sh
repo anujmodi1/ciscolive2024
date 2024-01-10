@@ -10,8 +10,8 @@ export AWS_PROFILE=kops
 export AWS_ACCESS_KEY_ID=$(aws configure get aws_access_key_id)
 export AWS_SECRET_ACCESS_KEY=$(aws configure get aws_secret_access_key)
 #export NAME=k8s.ciscolivedemo2022.com
-export NAME=kubernetes.ciscolivedemo2022.com
-export KOPS_STATE_STORE=s3://ciscolivedemo2022-kops-state
+export NAME=k8s.cloudkareai.com
+export KOPS_STATE_STORE=s3://cloudkareai-kops-state
 #
 
 kops create cluster --name=${NAME} --cloud=aws --zones=ap-south-1a --master-size t2.medium --node-size t2.medium

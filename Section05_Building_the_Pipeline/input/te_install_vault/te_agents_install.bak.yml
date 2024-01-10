@@ -1,0 +1,30 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: sconrod/thousandeyes-image
+    tag: 1
+
+inputs:
+  - name: git-resource
+
+params:
+  VAULT_ADDR: http://dev-vault.ciscolivedemo2022.com:8200
+  SSH_TOKEN: ((ssh-token.token))
+
+run:
+  path: /bin/sh
+  args:
+    - -cex
+    - |
+      export AWS_PAGER=""
+      NAME='us-west-1a'
+      export NAME
+      echo $NAME
+      chmod a+x git-resource/Section05_Building_the_Pipeline/input/te_install_vault/te_agents_install.sh
+      ./git-resource/Section05_Building_the_Pipeline/input/te_install_vault/te_agents_install.sh
+
+
+      

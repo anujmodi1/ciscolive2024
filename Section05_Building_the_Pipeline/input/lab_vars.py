@@ -1,0 +1,5 @@
+name='ap-south-1a'
+region='ap-south-1'
+az='ap-south-1a'
+ubuntu_ami_id='ami-0c281c09ef103f5c3'
+vault_addr='http://dev-vault.ciscolivedemo2022.com:8200'

@@ -1,0 +1,45 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: sconrod/python-aws-image
+    tag: 2.0
+
+inputs:
+  - name: git-resource
+params:
+  AWS_KEY_ID: ((Access_key_ID.Access_key))
+  AWS_KEY: ((Secret_access_key.Secret_access_key))
+  VAULT_ADDR: http://dev-vault.ciscolivedemo2022.com:8200
+  SSH_TOKEN: ((ssh-token.token))
+  NAME: us-west-1a
+  AZ: us-west-1a
+  REGION: us-west-1
+
+run:
+  path: /bin/sh
+  args:
+    - -cex
+    - |
+      export AWS_PAGER=""
+      export Name
+      echo $NAME
+      export VAULT_ADDR=$VAULT_ADDR
+      export VAULT_TOKEN=$SSH_TOKEN
+      vault login --no-print $VAULT_TOKEN
+      export REGION=$REGION
+      export AZ=$AZ
+      echo $REGION
+      echo $AZ
+      aws configure set aws_access_key_id $AWS_KEY_ID
+      aws configure set aws_secret_access_key $AWS_KEY
+      aws configure set default.region $REGION 
+      chmod a+x git-resource/Section05_Building_the_Pipeline/input/aws_vm_delete/aws_vpc_delete.sh
+      ./git-resource/Section05_Building_the_Pipeline/input/aws_vm_delete/aws_vpc_delete.sh
+      
+
+
+
+      

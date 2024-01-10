@@ -76,9 +76,6 @@ helm repo add bitnami https://charts.bitnami.com/bitnami
 cd concourse-chart/
 helm dependency build
 kubectl create ns dev-ci
-helm -n dev-ci install dev-ci . -f values.yaml
-helm -n dev-ci install dev-ci . -f /Users/anmodi/dev/ciscolivedemo/Section03-Deploying_Concourse_CI_Server/dev-ci-values.yaml
-helm -n dev-ci install dev-ci . -f /Users/anmodi/dev/ciscolivedemo/Section03-Deploying_Concourse_CI_Server/ci-values-latest.yaml
 helm -n dev-ci install dev-ci . -f /Users/anmodi/dev/ciscolive2024/Section03-Deploying_Concourse_CI_Server/dev-ci-values.yaml
 
 
@@ -95,8 +92,7 @@ Note down the loadbalance fqdn from the list
 http://dev-ci.cisco-fso-labs.com:8080/
 #enter the default user name & password as values.yaml file
 cd /Users/anmodi/dev/cisco-fso-labs/HELM/CONCOURSE
-fly --target=cisco-fso-labs login --concourse-url=http://dev-ci.cisco-fso-labs.com:8080 -n main --username=ci --password=PASSWORD!
-fly --target=target login --concourse-url=http://dev-ci.ciscolivedemo2022.com:8080 -n main --username=ci --password=cisco@2022
+fly --target=target login --concourse-url=http://dev-ci.cloudkareai.com:8080 -n main --username=ci --password=cisco@2024
 
 # create team cisco-fso--labs
 #setting up team and users
@@ -113,6 +109,8 @@ fly -t target set-pipeline -p pipeline6 -c /Users/anmodi/dev/ciscolivedemo/pipel
 fly -t target set-pipeline -p pipeline6 -c /Users/anmodi/dev/ciscolivedemo/pipelines/pipeline-v6-anuj.yml -l /Users/anmodi/dev/notes/params.yml -v aws.region=us-east-1 -v az.name=us-east-1a -v vault.addr=http://dev-vault.ciscolivedemo2022.com:8200
 
 fly -t target set-pipeline -p pipeline1 -c /Users/anmodi/dev/ciscolivedemo/Section05_Building_the_Pipeline/pipeline_v1.yml -l /Users/anmodi/dev/notes/params.yml -v aws.region=us-east-1 -v az.name=us-east-1a -v vault.addr=http://dev-vault.ciscolivedemo2022.com:8200
+fly -t target set-pipeline -p pipeline1 -c /Users/anmodi/dev/ciscolive2024/Section05_Building_the_Pipeline/pipeline_v1.yml -l /Users/anmodi/dev/notes/params.yml -v aws.region=us-east-1 -v az.name=us-east-1a -v vault.addr=http://dev-vault.ciscolivedemo2022.com:8200
+
 
 Fly commands
 https://www.thegeekdiary.com/fly-command-line-tool-for-concourse-ci/

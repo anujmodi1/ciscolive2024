@@ -1,4 +1,4 @@
 roles:
   - name: owner
     local:
-      users: ["ap-south-1a"]
+      users: ["us-east-1a"]
