@@ -12,9 +12,9 @@ inputs:
 
 params:
   UNPACK_ROOTFS: true
-  VAULT_ADDR: http://dev-vault.ciscolivedemo2022.com:8200
+  VAULT_ADDR: http://dev-vault.cloudkareai.com:8200
   SSH_TOKEN: ((ssh-token.token))
-  NAME: us-west-1
+  NAME: us-east-1
 run:
   path: /bin/sh
   args:
