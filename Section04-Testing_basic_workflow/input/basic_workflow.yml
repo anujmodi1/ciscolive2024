@@ -15,7 +15,8 @@ inputs:
 params:
   UNPACK_ROOTFS: true
   VAULT_ADDR: http://dev-vault.cloudkareai.com:8200
-  SSH_TOKEN: ((ssh-token.token))
+  SSH_TOKEN: hvs.CAESIJmL73Z94GPa-JHKnsalRGtHjFOj6CWF59Eq-ZkYaJhIGh4KHGh2cy43aXNGcWE3UkdObGoxWUl0U1ZyVnVVMWE
+  #SSH_TOKEN: ((ssh-token.token))
   NAME: us-east-1
 run:
   path: /bin/sh

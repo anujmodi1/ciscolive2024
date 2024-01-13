@@ -16,7 +16,7 @@ global:
 
   # External vault server address for the injector and CSI provider to use.
   # Setting this will disable deployment of a vault server.
-  #externalVaultAddr: "http://dev-vault.ciscolivedemo2022.com:8200"
+  #externalVaultAddr: "http://dev-vault.cloudkareai.com:8200"
   externalVaultAddr: ""
 
   # If deploying to OpenShift

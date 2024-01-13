@@ -77,6 +77,7 @@ cd concourse-chart/
 helm dependency build
 kubectl create ns dev-ci
 helm -n dev-ci install dev-ci . -f /Users/anmodi/dev/ciscolive2024/Section03-Deploying_Concourse_CI_Server/dev-ci-values.yaml
+helm -n dev-ci install dev-ci . -f /Users/anmodi/dev/ciscolive2024/Section03-Deploying_Concourse_CI_Server/concourse-latest-values.yaml
 
 
 kubectl get all -n dev-ci
@@ -98,6 +99,9 @@ fly --target=target login --concourse-url=http://dev-ci.cloudkareai.com:8080 -n 
 #setting up team and users
 #https://concourse-ci.org/managing-teams.html
 fly -t target set-team --team-name ciscolivedemo --local-user ap-south-1a -c operator-role.yml
+
+cd /Users/anmodi/dev/ciscolive2024/Section04-Testing_basic_workflow/input/basic_workflow.yml
+fly -t target e -c basic_workflow.yml
 
 fly -t target set-team --team-name ciscolivedemo --local-user ap-south-1a
 fly -t target set-team -n ciscolivedemo -c operator-role.yml
